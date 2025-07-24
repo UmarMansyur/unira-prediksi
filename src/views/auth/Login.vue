@@ -95,7 +95,6 @@
 import { useField, useForm } from 'vee-validate';
 import * as yup from 'yup';
 import useAPI from '../../composables/api';
-import { toast } from 'vue3-toastify';
 import useToken from '../../composables/token';
 import router from '../../router';
 
