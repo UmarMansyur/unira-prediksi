@@ -24,6 +24,24 @@ const routes: Array<RouteRecordRaw> = [
       is_auth: true,
       title: "Dashboard",
     },
+    beforeEnter: (_to, _from, next) => {
+      const session = sessionStore();
+      console.log(session);
+      if (session.user?.role !== "Administrator") {
+        next({ name: "Dashboard Dosen" });
+      } else {
+        next();
+      }
+    }
+  },
+  {
+    path: '/dashboard-dosen',
+    name: 'Dashboard Dosen',
+    component: () => import("../views/dosen/dashboard/Index.vue"),
+    meta: {
+      is_auth: true,
+      title: "Dashboard Dosen",
+    },
   },
   {
     path: "/dataset",
