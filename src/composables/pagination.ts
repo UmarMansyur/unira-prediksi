@@ -125,7 +125,7 @@ export default function usePagination(
   const isLoading = computed(() => isPending.value || isSearch.value);
   const isError = computed(() => !!error.value);
   const data = computed(() => queryData.value?.data?.data || []);
-  const meta = computed(() => queryData.value?.meta || {});
+  const meta = computed(() => queryData.value?.data?.meta || {});
   const currentPage = computed(
     () => queryData.value?.data?.current_page || page.value
   );

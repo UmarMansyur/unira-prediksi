@@ -6,6 +6,7 @@ import DataTable from "../../../components/DataTable.vue";
 import useAPI from "../../../composables/api";
 import { ref } from "vue";
 import { toast } from "vue3-toastify";
+import Modal from "./Modal.vue";
 const {
   data,
   setSearch,
@@ -45,11 +46,26 @@ const setProdi = (prodiId: string) => {
 };
 
 loadProdi();
+const targetLabel = ref("NAIK"); // atau STABIL/TURUN, bisa dibuat dropdown
+
+const getStatus = (item: any) => {
+  const actual = item.tren_ips;
+  const pred = item.tren_ips_pred;
+  const target = targetLabel.value;
+
+  if (actual === target && pred === target) return "TP";
+  if (actual !== target && pred === target) return "FP";
+  if (actual === target && pred !== target) return "FN";
+  if (actual !== target && pred !== target) return "TN";
+  return "-";
+};
+
 </script>
 
 <template>
   <Parent>
     <BreadCrumb title="Data Test" subtitle="Administrator" />
+    <Modal/>
     <DataTable
       :data="data"
       :setSearch="setSearch"
@@ -101,7 +117,7 @@ loadProdi();
           </div>
         </td>
         <td>{{ item.usia }}</td>
-        <td>{{ item.jenis_kelamin }}</td>
+        <td>{{ item.jenis_kelamin === '1' ? 'L' : 'P' }}</td>
         <td>{{ item.ips1 }}</td>
         <td>{{ item.ips2 }}</td>
         <td>{{ item.ips3 }}</td>
@@ -115,18 +131,18 @@ loadProdi();
         <!-- banding kan untuk dapat TN, TP, FN, FP -->
         <td>
           <span
-            :class="
-              item.tren_ips_pred === item.tren_ips
-                ? 'badge bg-success'
-                : 'badge bg-danger'
-            "
+            :class="{
+              'badge bg-success': getStatus(item) === 'TP',
+              'badge bg-danger': getStatus(item) === 'FP',
+              'badge bg-primary': getStatus(item) === 'TN',
+              'badge bg-warning text-dark': getStatus(item) === 'FN',
+            }"
           >
-            {{ item.tren_ips_pred === item.tren_ips ? "TP" : "FP" }}
+            {{ getStatus(item) }}
           </span>
         </td>
       </tr>
       <template #button>
-        <!-- select prodi -->
         <select
           class="form-select"
           v-model="selectedProdi"
@@ -138,8 +154,16 @@ loadProdi();
           </option>
         </select>
       </template>
+      <template #button2>
+        <div class="row">
+          <div class="col-md-12 text-start mb-3">
+            <RouterLink to="/riwayat-predict" class="btn btn-light">
+              <i class="bx bx-history"></i>
+              Riwayat Prediksi Manual
+            </RouterLink>
+          </div>
+        </div>
+      </template>
     </DataTable>
   </Parent>
 </template>
-
-<style scoped lang="css"></style>

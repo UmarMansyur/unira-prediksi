@@ -118,6 +118,15 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import("../views/administrator/predict/Index.vue"),
   },
   {
+    path: "/riwayat-predict",
+    name: "Riwayat Predict",
+    meta: {
+      is_auth: true,
+      title: "Riwayat Predict",
+    },
+    component: () => import("../views/administrator/predict/riwayat/Index.vue"),
+  },
+  {
     // users
     path: "/users",
     name: "Users",

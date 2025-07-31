@@ -4,16 +4,19 @@ import useAPI from "../../../composables/api";
 import Home from "../../layouts/Home.vue";
 import { onMounted, ref } from "vue";
 import Modal2 from "./Modal2.vue";
+import { hideLoader, showLoader } from "../../../helpers/event";
 
 const { getResource } = useAPI();
 
 const datas = ref<any[]>([]);
 const loadData = async () => {
+  showLoader();
   let url = `/decision-tree?limit=1&page=${page.value}`;
   if(selectedProdi.value) {
     url += `&prodi=${selectedProdi.value}`;
   }
   const response = await getResource(url, true);
+  hideLoader();
   if (response?.data) {
     datas.value = response.data?.data;
     totalPage.value = response.data?.total_page;

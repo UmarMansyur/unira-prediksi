@@ -9,6 +9,7 @@ import useAPI from "../../../composables/api";
 import { toast } from "vue3-toastify";
 import Modal from "./Modal.vue";
 import Modal2 from "./Modal2.vue";
+import { QueryClient } from "@tanstack/vue-query";
 const dataset = ref<any>({});
 const {
   data,
@@ -47,6 +48,8 @@ const importDatasetClick = () => {
   }
 };
 
+const queryClient = new QueryClient();
+
 const importDataset = async (event: any) => {
   const file = event.target.files[0];
   if (file) {
@@ -64,6 +67,7 @@ const importDataset = async (event: any) => {
       toast.error("Failed to import dataset: " + response.message);
     }
   }
+  queryClient.invalidateQueries({ queryKey: ["dataset"] });
 };
 const { getResource } = useAPI();
 const prodi = ref<any[]>([]);
@@ -115,16 +119,17 @@ onMounted(() => {
       :columns="[
         { key: 'name', label: 'Mahasiswa', sort: 'nama' },
         { key: 'Jenis Kelamin', label: 'Jenis Kelamin', sort: 'jenis_kelamin' },
-        // ips1-ips4
+        { key: 'usia', label: 'Usia', sort: 'usia' },
         { key: 'ips1', label: 'IPS 1', sort: 'ips1' },
         { key: 'ips2', label: 'IPS 2', sort: 'ips2' },
         { key: 'ips3', label: 'IPS 3', sort: 'ips3' },
         { key: 'ips4', label: 'IPS 4', sort: 'ips4' },
-        // sks 1 sampai 4
+        { key: 'ips5', label: 'IPS 5', sort: 'ips5' },
         { key: 'sks1', label: 'SKS 1', sort: 'sks1' },
         { key: 'sks2', label: 'SKS 2', sort: 'sks2' },
         { key: 'sks3', label: 'SKS 3', sort: 'sks3' },
         { key: 'sks4', label: 'SKS 4', sort: 'sks4' },
+        { key: 'sks5', label: 'SKS 5', sort: 'sks5' },
         { key: 'tren_ips', label: 'Tren IPS', sort: 'tren_ips' },
         // aksi
         { key: 'action', label: 'Aksi', sort: '', className: 'text-center' },
@@ -154,20 +159,25 @@ onMounted(() => {
             item.jenis_kelamin === 1 ? "Laki-laki" : "Perempuan"
           }}</span>
         </td>
+        <td>
+          <span>{{ item.usia ? item.usia + " Tahun" : "-" }}</span>
+        </td>
         <td>{{ item.ips1 ? item.ips1 : "-" }}</td>
         <td>{{ item.ips2 ? item.ips2 : "-" }}</td>
         <td>{{ item.ips3 ? item.ips3 : "-" }}</td>
         <td>{{ item.ips4 ? item.ips4 : "-" }}</td>
+        <td>{{ item.ips5 ? item.ips5 : "-" }}</td>
         <td>{{ item.sks1 ? item.sks1 : "-" }}</td>
         <td>{{ item.sks2 ? item.sks2 : "-" }}</td>
         <td>{{ item.sks3 ? item.sks3 : "-" }}</td>
         <td>{{ item.sks4 ? item.sks4 : "-" }}</td>
-        <td>
+        <td>{{ item.sks5 ? item.sks5 : "-" }}</td>
+        <td class="table-warning">
           <span>{{ item.tren_ips ? item.tren_ips : "-" }}</span>
         </td>
         <td class="text-center gap-2">
           <button
-            type="button"
+            type="button"coba
             class="btn btn-white p-2"
             data-bs-toggle="modal"
             data-bs-target="#modal-dataset"

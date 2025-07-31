@@ -65,6 +65,7 @@ loadProdi();
       :setLimit="setLimit"
       :limit="limit"
       :columns="[
+        { key: 'urutan', label: 'Urutan', sort: 'urutan' },
         { key: 'prodi', label: 'Prodi', sort: 'prodi' },
         { key: 'precision', label: 'Precision', sort: 'precision' },
         { key: 'recall', label: 'Recall', sort: 'recall' },
@@ -74,12 +75,14 @@ loadProdi();
         { key: 'tn', label: 'TN', sort: 'tn' },
         { key: 'fp', label: 'FP', sort: 'fp' },
         { key: 'fn', label: 'FN', sort: 'fn' },
+        { key: 'status', label: 'Status', sort: 'status' },
       ]"
       :is-loading="isLoading"
       :sort="sortBy"
       :set-sort="setSorting"
     >
       <tr v-for="(item, index) in data" :key="index">
+        <td>{{ item.urutan }}</td>
         <td>{{ item.prodi }}</td>
         <td>{{ Math.round(item.precision * 100) / 100 }}</td>
         <td>{{ Math.round(item.recall * 100) / 100 }}</td>
@@ -89,6 +92,16 @@ loadProdi();
         <td>{{ Math.round(item.tn * 100) / 100 }}</td>
         <td>{{ Math.round(item.fp * 100) / 100 }}</td>
         <td>{{ Math.round(item.fn * 100) / 100 }}</td>
+        <td>
+          <span
+            :class="{
+              'badge bg-success': item.is_temp == true,
+              'badge bg-danger': item.is_temp == false,
+            }"
+          >
+            {{ item.is_temp ? "Digunakan" : "Riwayat" }}
+          </span>
+        </td>
       </tr>
       <template #button>
         <!-- select prodi -->

@@ -66,6 +66,7 @@ loadProdi();
       :setLimit="setLimit"
       :limit="limit"
       :columns="[
+        { key: 'prodi', label: 'Program Studi', sort: 'prodi'},
         { key: 'usia', label: 'Usia', sort: 'usia' },
         { key: 'jenis_kelamin', label: 'Jenis Kelamin', sort: 'jenis_kelamin'},
         { key: 'ips1', label: 'IPS 1', sort: 'ips1' },
@@ -83,8 +84,9 @@ loadProdi();
       :set-sort="setSorting"
     >
       <tr v-for="(item, index) in data" :key="index">
+        <td>{{ item.prodi }}</td>
         <td>{{ item.usia }}</td>
-        <td>{{ item.jenis_kelamin }}</td>
+        <td>{{ item.jenis_kelamin === '1' ? 'L' : 'P' }}</td>
         <td>{{ item.ips1 }}</td>
         <td>{{ item.ips2 }}</td>
         <td>{{ item.ips3 }}</td>

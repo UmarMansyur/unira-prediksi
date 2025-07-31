@@ -9,6 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@hpcc-js/wasm": "^2.25.0",
     "@tanstack/vue-query": "^5.83.0",
     "@types/lodash": "^4.17.20",
     "jwt-decode": "^4.0.0",

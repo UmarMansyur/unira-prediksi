@@ -46,11 +46,27 @@ const setProdi = (prodiId: string) => {
 };
 
 loadProdi();
+
+const downloadSplitPohon = async () => {
+  let url = import.meta.env.VITE_API_URL + "/rule/download-split-trees";
+  if(selectedProdi.value) {
+    url += `?prodi=${selectedProdi.value}`;
+  }
+ window.open(url, "_blank");
+};
 </script>
 
 <template>
   <Parent>
     <BreadCrumb title="Data Rules" subtitle="Administrator" />
+    <div class="row mb-3">
+      <div class="col-md-12 text-end">
+         <button class="btn btn-success" @click="downloadSplitPohon">
+          <i class="bx bx-download me-2"></i>
+          Download History Split Pohon
+        </button>
+      </div>
+    </div>
     <DataTable
       :data="data"
       :setSearch="setSearch"
@@ -66,7 +82,7 @@ loadProdi();
       :setLimit="setLimit"
       :limit="limit"
       :columns="[
-        { key: 'parent_id', label: 'Parent', sort: 'parent_id' },
+        { key: 'parent_id', label: 'Node', sort: 'parent_id' },
         { key: 'position', label: 'Position', sort: 'position' },
         { key: 'threshold', label: 'Threshold', sort: 'threshold' },
         { key: 'field', label: 'Field', sort: 'field' },
@@ -89,6 +105,7 @@ loadProdi();
       </tr>
       <template #button>
         <!-- select prodi -->
+      
         <select
           class="form-select"
           v-model="selectedProdi"
