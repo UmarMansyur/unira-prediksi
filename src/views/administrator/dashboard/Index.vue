@@ -4,17 +4,19 @@ import { ref, onMounted } from 'vue';
 import BreadCrumb from "../../../components/BreadCrumb.vue";
 import { sessionStore } from "../../../stores";
 import Home from "../../layouts/Home.vue";
+import useAPI from '../../../composables/api';
 
 const session = sessionStore();
 const dashboardData = ref<any>(null);
 const loading = ref<any>(true);
 const error = ref<any>(null);
-
+const { baseURL } = useAPI();
 // Fetch dashboard data
 const fetchDashboardData = async () => {
   try {
     loading.value = true;
-    const response = await fetch('http://localhost:3000/dashboard');
+
+    const response = await fetch(`${baseURL}/dashboard`);
     if (!response.ok) {
       throw new Error('Failed to fetch dashboard data');
     }
