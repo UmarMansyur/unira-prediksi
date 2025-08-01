@@ -12,6 +12,8 @@
     "@hpcc-js/wasm": "^2.25.0",
     "@tanstack/vue-query": "^5.83.0",
     "@types/lodash": "^4.17.20",
+    "apexcharts": "^5.3.2",
+    "chartjs-plugin-datalabels": "^2.2.0",
     "jwt-decode": "^4.0.0",
     "lodash": "^4.17.21",
     "moment": "^2.30.1",
@@ -20,6 +22,7 @@
     "vee-validate": "^4.15.1",
     "vue": "^3.5.17",
     "vue-router": "^4.5.1",
+    "vue3-apexcharts": "^1.8.0",
     "vue3-toastify": "^0.2.8",
     "yup": "^1.6.1"
   },
