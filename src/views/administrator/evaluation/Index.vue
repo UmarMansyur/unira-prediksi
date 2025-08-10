@@ -95,11 +95,11 @@ loadProdi();
         <td>
           <span
             :class="{
-              'badge bg-success': item.is_temp == true,
-              'badge bg-danger': item.is_temp == false,
+              'badge bg-danger': item.is_temp == true,
+              'badge bg-success': item.is_temp == false,
             }"
           >
-            {{ item.is_temp ? "Digunakan" : "Riwayat" }}
+            {{ item.is_temp ? "Riwayat" : "Digunakan" }}
           </span>
         </td>
       </tr>
